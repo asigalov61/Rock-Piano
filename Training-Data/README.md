@@ -4,7 +4,7 @@
 
 ## Training Data Details:
 
-### TMIDIX.py/MIDI.py format
+### TMIDIX.py/MIDI.py SCORE format
 
 ### As one giant MIDI composition
 
