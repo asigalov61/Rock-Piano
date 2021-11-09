@@ -30,7 +30,7 @@
 
 ### Model Details
 
-#### Trained upon ~1196 Western Rock Music Masterpieces
+#### Trained upon ~1196 compositions which were randomly selected from ~2392 Western Rock Music Masterpieces
 
 #### Model SEQ: [delta-start-time, duration, channel, pitch]
 
