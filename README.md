@@ -1,9 +1,9 @@
 # Rock Piano
-#### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
 
-***
+## Proof-Of-Concept Piano-Drums Music AI Model/Implementation
 
-### Proof-Of-Concept Piano-Drums Music AI Model/Implementation
+### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
+
 
 ***
 
