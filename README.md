@@ -1,10 +1,9 @@
 # Rock Piano
-
-#### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
+##### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
 
 ***
 
-## Proof-Of-Concept Piano-Drums Music AI Model/Implementation
+### Proof-Of-Concept Piano-Drums Music AI Model/Implementation
 
 ***
 
@@ -19,6 +18,19 @@
 ### 4) Drums-conditioned Piano generation
 
 ### 5) Other possible uses
+
+***
+
+## Citation
+
+```bibtex
+@inproceedings{lev2021rockpiano,
+    title       = {Rock Piano},
+    author      = {Aleksandr Lev},
+    booktitle   = {GitHub},
+    year        = {2021},
+}
+```
 
 ***
 
