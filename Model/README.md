@@ -2,7 +2,7 @@
 
 ***
 
-## Trained for ~16 hours on Ampere 100 GPU to 0.05 Floss and 0.991 Facc for ~137k steps
+## Trained for ~16 hours on Ampere 100 GPU to 0.05 Floss and 0.991 Facc for ~137k steps @ 32 batches
 
 ***
 
