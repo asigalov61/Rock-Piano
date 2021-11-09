@@ -4,8 +4,10 @@
 
 ## Training Data Details:
 
-### TMIDIX.py/MIDI.py SCORE format
+1) ~2392 Piano-Drums western rock music excerpts
 
-### As one giant MIDI composition
+2) TMIDIX.py/MIDI.py SCORE format
+
+3) As one giant MIDI composition in a pickle file
 
 ***
