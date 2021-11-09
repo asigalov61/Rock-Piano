@@ -10,7 +10,7 @@
 
 [![Open In Colab][colab-badge3]][colab-notebook3]
 
-[colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Optimus-VIRTUOSO/blob/main/Optimus_VIRTUOSO_Multi_Instrumental_RGA_Edition.ipynb>
+[colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Rock-Piano/blob/main/Rock-Piano.ipynb>
 [colab-badge3]: <https://colab.research.google.com/assets/colab-badge.svg>
 
 ***
