@@ -15,7 +15,7 @@
 ***
 
 ### Model Applications
-```
+
 1) Semi-original Piano-Drums performance generation
 
 2) Semi-original Piano-Drums continuations generation
@@ -25,17 +25,15 @@
 4) Drums-conditioned Piano generation
 
 5) Other possible uses
-```
+
 ***
 
 ### Model Details
-```
+
 1) Trained upon ~1196 Piano-Drums compositions excerpts which were randomly selected from ~2392 western rock music masterpieces
 
-2) Model SEQ: [EOS, delta-start-time, duration, channel, pitch, EOS]
+2) Model SEQ: [delta-start-time, duration, channel, pitch, EOS]
 
-...
-```
 ***
 
 ### Citation
