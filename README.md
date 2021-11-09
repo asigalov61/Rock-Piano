@@ -6,7 +6,7 @@
 
 ***
 
-### Possible Model Applications
+## Model Applications
 
 ### 1) Semi-original Piano-Drums performance generation
 
@@ -20,7 +20,7 @@
 
 ***
 
-#### Project Los Angeles
+### Project Los Angeles
 
-#### Tegridy Code 2021
+### Tegridy Code 2021
 
