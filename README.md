@@ -1,5 +1,5 @@
 # Rock Piano
-##### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
+#### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
 
 ***
 
@@ -14,21 +14,31 @@
 
 ***
 
-## Model Applications
+### Model Applications
 
-### 1) Semi-original Piano-Drums performance generation
+#### 1) Semi-original Piano-Drums performance generation
 
-### 2) Semi-original Piano-Drums continuations generation
+#### 2) Semi-original Piano-Drums continuations generation
 
-### 3) Piano-conditioned Drums generation
+#### 3) Piano-conditioned Drums generation
 
-### 4) Drums-conditioned Piano generation
+#### 4) Drums-conditioned Piano generation
 
-### 5) Other possible uses
+#### 5) Other possible uses
 
 ***
 
-## Citation
+### Model Details
+
+#### Trained upon ~1196 Western Rock Music Masterpieces
+
+#### Model SEQ: [delta-start-time, duration, channel, pitch]
+
+#### ...
+
+***
+
+### Citation
 
 ```bibtex
 @inproceedings{lev2021rockpiano,
