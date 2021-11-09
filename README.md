@@ -7,6 +7,13 @@
 
 ***
 
+[![Open In Colab][colab-badge3]][colab-notebook3]
+
+[colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Optimus-VIRTUOSO/blob/main/Optimus_VIRTUOSO_Multi_Instrumental_RGA_Edition.ipynb>
+[colab-badge3]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
 ## Model Applications
 
 ### 1) Semi-original Piano-Drums performance generation
