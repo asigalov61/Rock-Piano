@@ -6,8 +6,6 @@
 
 ## Proof-Of-Concept Piano-Drums Music AI Model/Implementation
 
-***
-
 [![Open In Colab][colab-badge3]][colab-notebook3]
 
 [colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Rock-Piano/blob/main/Rock-Piano.ipynb>
