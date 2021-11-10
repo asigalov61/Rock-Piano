@@ -1,3 +1,7 @@
+## [WIP] The repo and the model/implementation will be updated shortly due to unforeseen problems with the current one. Please wait...
+
+***
+
 # Rock Piano
 
 ### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
