@@ -33,7 +33,7 @@
 
 ### Model Details
 
-1) Trained upon ~500 Piano-Drums music excerpts which were randomly selected from ~2392 western rock music masterpieces
+1) Trained upon ~500 Piano-Drums excerpts which were randomly selected from ~2392 western rock music masterpieces
 
 2) Model SEQ: [channel, delta-start-time, pitch, duration, EOS]
 
