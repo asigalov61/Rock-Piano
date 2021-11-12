@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Rock Piano (ver. 1.0)
+# # Rock Piano (ver. 2.0)
 # 
-# ## "Music comes from the heart!" ---LU
+# ## "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
 #  
 # ***
 #  
@@ -31,7 +31,7 @@
 get_ipython().system('nvidia-smi')
 
 
-# In[1]:
+# In[ ]:
 
 
 #@title Install all dependencies (run only once per session)
@@ -41,7 +41,7 @@ get_ipython().system('git clone https://github.com/asigalov61/Rock-Piano    ')
 get_ipython().system('pip install tqdm')
 
 
-# In[3]:
+# In[ ]:
 
 
 print('Loading needed modules. Please wait...')
@@ -60,7 +60,7 @@ print('Loading GPT2RGA module...')
 from GPT2RGA import *
 
 
-# In[4]:
+# In[ ]:
 
 
 # Unzip the Model and the Training Data
@@ -77,7 +77,7 @@ print('=' * 70)
 print('Done!')
 
 
-# In[5]:
+# In[ ]:
 
 
 #@title Load/Reload the model
@@ -100,7 +100,7 @@ model.load_state_dict(torch.load(full_path_to_model_checkpoint))
 print('Done!')
 
 
-# In[7]:
+# In[ ]:
 
 
 # Load the Training Data for priming the model
@@ -118,13 +118,13 @@ data = TMIDIX.Tegridy_Any_Pickle_File_Reader('Rock-Piano-Training-Data')
 
 pe = data[0]
 for d in tqdm(data):
-    song_ints.extend([int(abs(d[1] - pe[1]) / 10)+33, int(d[2] / 10)+33, d[3]+33, d[4]+33, 10])
+    song_ints.extend([d[3], int(abs(d[1] - pe[1]) / 10), d[4], int(d[2] / 10), 500])
     pe = d
     
 print('Done!')
 
 
-# In[9]:
+# In[ ]:
 
 
 # Run this code to prime with your own custom MIDI
@@ -141,13 +141,13 @@ data = TMIDIX.Optimus_MIDI_TXT_Processor('Rock-Piano-Continuation-Seed-1.mid',
 
 pe = data[2][0]
 for d in tqdm(data[2]):
-    inputs.extend([int(abs(d[1] - pe[1]) / 10)+33, int(d[2] / 10)+33, d[3]+33, d[4]+33, 10])
+    inputs.extend([d[3], int(abs(d[1] - pe[1]) / 10), d[4], int(d[2] / 10), 500])
     pe = d
-    
+ 
 print('Done!')
 
 
-# In[11]:
+# In[ ]:
 
 
 #@title Generate Music
@@ -161,7 +161,6 @@ encoding_has_MIDI_channels = False
 encoding_has_velocities = False
 simulate_velocity = True #@param {type:"boolean"}
 save_only_first_composition = True
-chars_encoding_offset_used_for_dataset = 33
 
 fname = 'Rock-Piano-Composition'
 
@@ -173,7 +172,7 @@ song_name = 'RGA Composition'
 model.eval()
 
 if use_random_primer:
-    sequence = [random.randint(10, 387) for i in range(64)]
+    sequence = [random.randint(10, 500) for i in range(64)]
     idx = secrets.randbelow(len(sequence))
     rand_seq = model.generate(torch.Tensor(sequence[idx:idx+120]), target_seq_length=number_of_tokens_to_generate)
     out = rand_seq[0].cpu().numpy().tolist()
@@ -181,59 +180,59 @@ if use_random_primer:
 else:
     out = []
   
-    #try:
-    if len(inputs) > 0:
-      rand_seq = model.generate(torch.Tensor(inputs[-128:]), target_seq_length=number_of_tokens_to_generate)
-      out = rand_seq[0].cpu().numpy().tolist()
-    else:
-      idx = secrets.randbelow(len(song_ints))
-      rand_seq = model.generate(torch.Tensor(song_ints[idx:idx+120]), target_seq_length=number_of_tokens_to_generate)
-      out = rand_seq[0].cpu().numpy().tolist()
+    try:
+        if len(inputs) > 0:
+          rand_seq = model.generate(torch.Tensor(inputs[-128:]), target_seq_length=number_of_tokens_to_generate)
+          out = rand_seq[0].cpu().numpy().tolist()
+        else:
+          idx = secrets.randbelow(len(song_ints))
+          rand_seq = model.generate(torch.Tensor(song_ints[idx:idx+120]), target_seq_length=number_of_tokens_to_generate)
+          out = rand_seq[0].cpu().numpy().tolist()
   
-  #except:
-    #print('=' * 50)
-    #print('Error! Try random priming instead!')
-    #print('Shutting down...')
-    #print('=' * 50)
+    except:
+        print('=' * 50)
+        print('Error! Try random priming instead!')
+        print('Shutting down...')
+        print('=' * 50)
 
 if len(out) != 0:
-  song = []
-  sng = []
-  for o in out:
-    if o != 10:
-      sng.append(o)
-    else:
-      if len(sng) == 4:
-        song.append(sng)
-      sng = []
+    song = []
+    sng = []
+    for o in out:
+        if o != 500:
+          sng.append(o)
+        else:
+          if len(sng) == 4:
+            song.append(sng)
+          sng = []
 
-  char_offset = 33
-  song_f = []
-  time = 0
-  for s in song:
+    char_offset = 0
+    song_f = []
+    time = 0
+    for s in song:
     
-    song_f.append(['note', (abs(time)) * 10, (s[1]-char_offset) * 10, s[2]-char_offset, s[3]-char_offset, s[3]-char_offset])
-    time += (s[0] - char_offset)
-
-  detailed_stats = TMIDIX.Tegridy_SONG_to_MIDI_Converter(song_f,
+        song_f.append(['note', (abs(time)) * 10, (s[3]-char_offset) * 10, s[0]-char_offset, s[2]-char_offset, s[2]-char_offset])
+        time += (s[1] - char_offset)
+    
+    detailed_stats = TMIDIX.Tegridy_SONG_to_MIDI_Converter(song_f,
                                                         output_signature = output_signature,  
                                                         output_file_name = fname, 
                                                         track_name=song_name, 
                                                         number_of_ticks_per_quarter=number_of_ticks_per_quarter)
 
-  print('Done!')
+    print('Done!')
 
-  #print('Downloading your composition now...')
-  #from google.colab import files
-  #files.download(fname + '.mid')
+    #print('Downloading your composition now...')
+    #from google.colab import files
+    #files.download(fname + '.mid')
 
-  print('=' * 70)
-  print('Detailed MIDI stats:')
-  for key, value in detailed_stats.items():
+    print('=' * 70)
+    print('Detailed MIDI stats:')
+    for key, value in detailed_stats.items():
         print('=' * 70)
         print(key, '|', value)
 
-  print('=' * 70)
+    print('=' * 70)
 
 else:
   print('Models output is empty! Check the code...')
@@ -247,7 +246,7 @@ else:
 
 #@markdown NOTE: You much generate a seed composition first or it is not going to start
 
-number_of_cycles_to_run = 5 #@param {type:"slider", min:1, max:50, step:1}
+number_of_cycles_to_run = 10 #@param {type:"slider", min:1, max:50, step:1}
 number_of_prime_tokens = 128 #@param {type:"slider", min:64, max:256, step:64}
 
 print('=' * 70)
@@ -288,21 +287,21 @@ if len(out) != 0:
     song = []
     sng = []
     for o in out2:
-      if o != 10:
+      if o != 500:
         sng.append(o)
       else:
         if len(sng) == 4:
           song.append(sng)
         sng = []
 
-    char_offset = 33
+    char_offset = 0
     song_f = []
     time = 0
     for s in song:
       
-        song_f.append(['note', (abs(time)) * 10, (s[1]-char_offset) * 10, s[2]-char_offset, s[3]-char_offset, s[3]-char_offset])      
-        time += (s[0] - char_offset)
-
+        song_f.append(['note', (abs(time)) * 10, (s[3]-char_offset) * 10, s[0]-char_offset, s[2]-char_offset, s[2]-char_offset])
+        time += (s[1] - char_offset)
+        
     song_name = 'Auto-Regressive RGA Composition'
 
     detailed_stats = TMIDIX.Tegridy_SONG_to_MIDI_Converter(song_f,
