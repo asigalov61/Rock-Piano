@@ -2,7 +2,7 @@
 
 ***
 
-## Trained for ~16 hours on Ampere 100 GPU to 0.05 Floss and 0.991 Facc for ~137k steps @ 32 batches
+## Trained for ~16 hours on Ampere 100 GPU to 0.05 Floss and 0.99 Facc for ~137k steps @ 32 batches
 
 ***
 
@@ -26,6 +26,11 @@ dropout_prob = 0.1
 
 
 ***
+
+### Raw Training Stats:
+
+Epoch: 1 Loss: 0.0507 LR: 0.00011850476: 100%|██████████| 139078/139078 [16:37:09<00:00,  2.32it/s]    
+Loss val: 0.0286  Acc: 0.9907:   1%|          | 130/16690 [00:29<1:01:44,  4.47it/s]
 
 #### Project Los Angeles
 
