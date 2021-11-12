@@ -1,7 +1,3 @@
-## [WIP] The repo and the model/implementation will be updated shortly due to unforeseen problems with the current one. Please wait...
-
-***
-
 # Rock Piano
 
 ### "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
@@ -45,6 +41,7 @@
 2) Drums-conditioned Piano generation can be envoked by [EOS, 0] sequence
 3) To generate a note at the same time point use i.e. [EOS, 9, 0]
 4) To generate a note at the future time point use i.e. [EOS, 9, desired-delta-time] i.e. [EOS, 9, 7]
+5) Just in case, EOS == 500, Piano channel == 0, Drums channel = 9
 
 ***
 
