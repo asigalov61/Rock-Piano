@@ -37,7 +37,14 @@
 
 2) Model SEQ: [channel, delta-start-time, pitch, duration, EOS]
 
-3) ...
+***
+
+### Model Use Tips:
+
+1) Piano-conditioned Drums generation can be envoked by [EOS, 9] sequence
+2) Drums-conditioned Piano generation can be envoked by [EOS, 0] sequence
+3) To generate a note at the same time point use i.e. [EOS, 9, 0]
+4) To generate a note at the future time point use i.e. [EOS, 9, desired-delta-time] i.e. [EOS, 9, 7]
 
 ***
 
