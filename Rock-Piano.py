@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Rock Piano (ver. 2.0)
+# # Rock Piano (ver. 3.0)
 # 
 # ## "When all is one and one is all, that's what it is to be a rock and not to roll." ---Led Zeppelin, "Stairway To Heaven"
 #  
@@ -52,7 +52,7 @@ import copy
 import tqdm
 from tqdm import tqdm
 
-os.chdir('Rock-Piano')
+#os.chdir('Rock-Piano')
 
 print('Loading TMIDIX module...')
 import TMIDIX
@@ -96,6 +96,7 @@ config = GPTConfig(VOCAB_SIZE,
 model = GPT(config).to(get_device())
 
 model.load_state_dict(torch.load(full_path_to_model_checkpoint))
+model.eval()
 
 print('Done!')
 
@@ -168,8 +169,6 @@ print('Rock Piano Model Generator')
 
 output_signature = 'Rock Piano'
 song_name = 'RGA Composition'
-
-model.eval()
 
 if use_random_primer:
     sequence = [random.randint(10, 500) for i in range(64)]
@@ -331,6 +330,128 @@ else:
   print('Please generate prime sequence and retry')
 
 print('=' * 70)
+
+
+# In[ ]:
+
+
+# Rather crude Piano-conditioned Drums generator
+
+print('Rock Piano Model Generator')
+print('Project Los Angeles')
+print('Tegridy Code 2021')
+
+source_MIDI_file = 'Rock-Piano-Continuation-Seed-1.mid' # soutce MIDI file
+
+fname = 'Rock-Piano-Composition'
+output_signature = 'Rock Piano'
+song_name = 'RGA Composition'
+
+#===================================
+
+def split_list(test_list):
+  
+    # using list comprehension + zip() + slicing + enumerate()
+    # Split list into lists by particular value
+    size = len(test_list)
+    idx_list = [idx + 1 for idx, val in
+                enumerate(test_list) if val == 500]
+
+
+    res = [test_list[i: j] for i, j in
+            zip([0] + idx_list, idx_list + 
+            ([size] if idx_list[-1] != size else []))]
+  
+    # print result
+    # print("The list after splitting by a value : " + str(res))
+    
+    return res
+
+#====================================
+
+# print('Loading MIDI file...')
+
+mel_crd_f = []
+score = TMIDIX.midi2ms_score(open(source_MIDI_file, 'rb').read())
+
+events_matrix = []
+itrack = 1
+
+while itrack < len(score):
+    for event in score[itrack]:
+        
+        if event[0] == 'note' and event[3] != 9: # reading all notes events except for the drums
+            events_matrix.append(event)
+        
+    itrack += 1
+    
+# print('Grouping by start time. This will take a while...')
+values = set(map(lambda x:x[1], events_matrix)) # Non-multithreaded function version just in case
+
+groups = [[y for y in events_matrix if y[1]==x] for x in values] # Grouping notes into chords while discarting bad notes...
+
+mel_crd = []    
+
+# print('Sorting events...')
+for items in groups:
+
+    items.sort(reverse=True, key=lambda x: x[4]) # Sorting events by pitch
+
+    mel_crd.append([items[0]]) # Creating final chords list
+
+mel_crd.sort(reverse=False, key=lambda x: x[0][1])
+
+
+
+#====================================
+
+ints_f = []
+pe = mel_crd[0][0]
+for m in mel_crd:
+    ints = []
+    for mm in m:
+        ints.extend([mm[3], min(500, int(abs(m[0][1]-pe[1])) / 10 ), mm[4], min(500, int(mm[2] / 10)) ])
+    ints_f.append(ints)    
+    pe = m[0]
+
+
+
+#====================================
+
+SONG = []
+
+for i in tqdm(range(len(ints_f))):
+    if len(ints_f[i]) < 12:
+        rand_seq1 = model.generate(torch.Tensor(ints_f[i]+[500, 9, 0]), target_seq_length=11)
+        out1 = rand_seq1[0].cpu().numpy().tolist()
+        SONG.extend(split_list(out1))
+        
+        
+#===================================    
+
+
+char_offset = 0
+song_f = []
+time = 0
+for s in SONG:
+    if len(s) > 4:
+        song_f.append(['note', (abs(time)) * 10, (s[3]-char_offset) * 10, s[0]-char_offset, s[2]-char_offset, 90])
+        time += (s[1] - char_offset)
+
+        
+SONG_f = [y for y in events_matrix if y[3] != 9] + [y for y in song_f if y[3] == 9]
+
+SONG_f.sort()
+        
+detailed_stats = TMIDIX.Tegridy_SONG_to_MIDI_Converter(SONG_f,
+                                                      output_signature = output_signature,  
+                                                      output_file_name = fname, 
+                                                      track_name=song_name, 
+                                                      number_of_ticks_per_quarter=500)
+
+print('Done!')
+
+detailed_stats
 
 
 # # Congrats! :) You did it! :)
