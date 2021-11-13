@@ -384,62 +384,43 @@ while itrack < len(score):
             events_matrix.append(event)
         
     itrack += 1
-    
-# print('Grouping by start time. This will take a while...')
-values = set(map(lambda x:x[1], events_matrix)) # Non-multithreaded function version just in case
-
-groups = [[y for y in events_matrix if y[1]==x] for x in values] # Grouping notes into chords while discarting bad notes...
-
-mel_crd = []    
-
-# print('Sorting events...')
-for items in groups:
-
-    items.sort(reverse=True, key=lambda x: x[4]) # Sorting events by pitch
-
-    mel_crd.append([items[0]]) # Creating final chords list
-
-mel_crd.sort(reverse=False, key=lambda x: x[0][1])
-
-
 
 #====================================
 
+events_matrix.sort()
+
 ints_f = []
-pe = mel_crd[0][0]
-for m in mel_crd:
-    ints = []
-    for mm in m:
-        ints.extend([mm[3], min(500, int(abs(m[0][1]-pe[1])) / 10 ), mm[4], min(500, int(mm[2] / 10)) ])
-    ints_f.append(ints)    
-    pe = m[0]
-
-
+pe = events_matrix[0]
+for mm in events_matrix:
+    ints_f.append([mm[3], min(499, int(abs(mm[1]-pe[1]) / 10 )), mm[4], min(499, int(mm[2] / 10)) ])
+    pe = mm
 
 #====================================
 
 SONG = []
 
 for i in tqdm(range(len(ints_f))):
-    if len(ints_f[i]) < 12:
-        rand_seq1 = model.generate(torch.Tensor(ints_f[i]+[500, 9, 0]), target_seq_length=11)
-        out1 = rand_seq1[0].cpu().numpy().tolist()
-        SONG.extend(split_list(out1))
-        
+    rand_seq1 = model.generate(torch.Tensor(ints_f[i]+[500, 9, 0]), target_seq_length=10)
+    out = rand_seq1[0].cpu().numpy().tolist()
+    SONG.extend([out[:5]])
+    SONG.extend([out[5:]])
         
 #===================================    
 
-
-char_offset = 0
 song_f = []
-time = 0
+time = SONG[0][1]
 for s in SONG:
-    if len(s) > 4:
-        song_f.append(['note', (abs(time)) * 10, (s[3]-char_offset) * 10, s[0]-char_offset, s[2]-char_offset, 90])
-        time += (s[1] - char_offset)
+    song_f.append(['note', time, s[3] * 10, s[0], s[2], 90])
+    time += (s[1] * 10) 
 
-        
-SONG_f = [y for y in events_matrix if y[3] != 9] + [y for y in song_f if y[3] == 9]
+ev_mat = []
+ztime = events_matrix[0][1]    
+for e in events_matrix:
+    ee = copy.deepcopy(e)
+    ee[1] = e[1] - ztime
+    ev_mat.append(ee)
+    
+SONG_f = ev_mat + [y for y in song_f if y[3] == 9]
 
 SONG_f.sort()
         
