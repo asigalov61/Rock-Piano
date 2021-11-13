@@ -44,12 +44,11 @@ r'''############################################################################
 # pip install torch
 # pip install tqdm
 #
-########################################################
+# #######################################################
 
 print('Loading GPT2-RGA Module...')
 
-########################################################
-
+""
 import glob
 import os
 import sys
@@ -75,8 +74,7 @@ from torch.nn.init import *
 
 from torch.nn.functional import linear, softmax, dropout
 
-########################################################
-
+""
 # Constants
 
 SEQUENCE_START = 0
@@ -132,8 +130,7 @@ d_model = 512
 dim_feedforward = 512
 dropout_prob = 0.1
 
-########################################################
-
+""
 def cpu_device():
 
     return TORCH_CPU_DEVICE
@@ -271,8 +268,7 @@ def get_lr(optimizer):
     for param_group in optimizer.param_groups:
         return param_group['lr']
 
-########################################################
-
+""
 #@title Functions
 class EPianoDataset(Dataset):
     """
@@ -357,8 +353,7 @@ def process_midi(raw_mid, max_seq, random_seq):
 
     return x, tgt
 
-########################################################
-
+""
 class CausalSelfAttention(nn.Module):
     """
     A vanilla multi-head masked self-attention layer with a projection at the end.
@@ -952,7 +947,7 @@ class GPT(nn.Module):
 
         assert (not self.training), "Cannot generate while in training mode"
 
-        print("Generating sequence of max length:", target_seq_length)
+        # print("Generating sequence of max length:", target_seq_length)
 
         gen_seq = torch.full((1,target_seq_length), TOKEN_PAD, dtype=TORCH_LABEL_TYPE, device=get_device())
 
@@ -1022,15 +1017,13 @@ class GPTConfig:
 import logging
 logger = logging.getLogger(__name__)
 
-########################################################
-
+""
 def Plot_Losses(losses):
   pass
 
-########################################################
-
+""
 print('GPT2-RGA loading complete!')
 print('Enjoy!')
 
 ########################################################
-########################################################
+# #######################################################
