@@ -35,9 +35,9 @@
 
 3) Expanded Model SEQ: [channel(0,9), delta-start-time(ms)(0-500), pitch(0-127), duration(ms)(0-500), EOS(500)]
 
-4) Start time and duration is divided by 10
+4) MIDI Start time and duration in ticks is converted to milliseconds and then divided by 10
 
-5) Timings are in milliseconds
+5) Model timings are in milliseconds / 10
 
 ***
 
