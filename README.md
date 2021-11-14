@@ -33,6 +33,12 @@
 
 2) Model SEQ: [channel, delta-start-time, pitch, duration, EOS]
 
+3) Expanded Model SEQ: [channel(0,9), delta-start-time(ms)(0-500), pitch(0-127), duration(ms)(0-500), EOS(500)]
+
+4) Start time and duration is divided by 10
+
+5) Timings are in milliseconds
+
 ***
 
 ### Model Use Tips:
